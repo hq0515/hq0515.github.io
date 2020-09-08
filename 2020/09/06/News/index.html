@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Notes,Recommendation,Machine Learing," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介NewsRecommendation是Recommendation的一个子领域，但是新闻推荐系统不同于其他的推荐系统，还需要对新闻文本进行处理，之前NewsRecommendation这个领域没什么进展是因为缺乏相关的数据集，Microsoft最近刚刚开源了MIND数据集，可以使用MIND数据集来研究新闻推荐系统的相关模型算法**">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NewsRecommendation">
+<meta property="og:url" content="https://hq0515.github.io/2020/09/06/News/index.html">
+<meta property="og:site_name" content="JS.HUANG">
+<meta property="og:description" content="简介NewsRecommendation是Recommendation的一个子领域，但是新闻推荐系统不同于其他的推荐系统，还需要对新闻文本进行处理，之前NewsRecommendation这个领域没什么进展是因为缺乏相关的数据集，Microsoft最近刚刚开源了MIND数据集，可以使用MIND数据集来研究新闻推荐系统的相关模型算法**">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191342191.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191418124.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191443492.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191455922.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191535667.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191549406.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191608352.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191633984.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191646290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200906191725958.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020090816141242.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200908161943249.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200908163821385.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200908171158365.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200908164618365.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2020-09-06T07:16:32.454Z">
+<meta property="article:modified_time" content="2020-09-08T09:13:38.931Z">
+<meta property="article:author" content="JS.H">
+<meta property="article:tag" content="Notes">
+<meta property="article:tag" content="Recommendation">
+<meta property="article:tag" content="Machine Learing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200906191342191.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hq0515.github.io/2020/09/06/News/"/>
+
+
+
+
+
+  <title>NewsRecommendation | JS.HUANG</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JS.HUANG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Welcome to my blog!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hq0515.github.io/2020/09/06/News/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JS.H">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JS.HUANG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NewsRecommendation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-06T15:16:32+08:00">
+                2020-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Recommendation/" itemprop="url" rel="index">
+                    <span itemprop="name">Recommendation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>NewsRecommendation是Recommendation的一个子领域，但是新闻推荐系统不同于其他的推荐系统，还需要对新闻文本进行处理，之前NewsRecommendation这个领域没什么进展是因为缺乏相关的数据集，Microsoft最近刚刚开源了MIND数据集，可以使用MIND数据集来研究新闻推荐系统的相关模型算法**</p>
+<a id="more"></a>
+<p>关于MIND数据集的介绍可以参考这篇paper： <strong>MIND: A Large-scale Dataset for News Recommendation</strong></p>
+<p>MSRA对NewsRecommendation提出的几个模型的相关paper如下：</p>
+<p><strong>NPA: Neural News Recommendation with Personalized Attention</strong></p>
+<p><strong>Neural News Recommendation with Multi-Head Self-Attention</strong></p>
+<p><strong>Neural News Recommendation with Attentive Multi-View Learning</strong></p>
+<p><strong>Fine-grained Interest Matching for Neural News Recommendation</strong></p>
+<p><strong>Neural News Recommendation with Long- and Short-term User Representations</strong></p>
+<p>Ali对推荐系统的相关研究论文（对该领域的研究有所帮助）：</p>
+<p><strong>Deep Interest Network for Click-Through Rate Prediction</strong></p>
+<h2 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在现在这个信息化的时代，人们阅读新闻的方式已经逐渐从纸质阅读上转到了电子设备上。现在每天都会有成百上千万的新闻推送给每个人，对于个人用户来说从这成百上千万条新闻中选取自己感兴趣的文章是非常困难的。因此个人新闻推荐技术就显得尤为重要。许多网站如 <strong><em>Google News</em></strong> 与  <strong><em>MSN News</em></strong> 开始使用个人新闻推荐技术来给用户按推荐新闻。</p>
+<p>个人新闻推荐的核心就在于 <strong><em>用户兴趣与候选新闻的正确匹配</em></strong></p>
+<h3 id="Problem-Definition"><a href="#Problem-Definition" class="headerlink" title="Problem Definition"></a>Problem Definition</h3><p>个人新闻推荐问题可以按照如下进行描述：</p>
+<p>给定一个一个用户 <strong><em>u</em></strong>，再给定一个用户浏览过的历史新闻的集合<br><strong><em>su= {d1, . . . , dn}</em></strong> 。</p>
+<p>对每一条候选新闻 <strong><em>ci</em></strong>，都有一个标签 <strong><em>yi ∈ {0, 1}</em></strong> 来预测用户是否会点击该条候选新闻。</p>
+<p>所有新闻推荐的目标就是构建一个预测模型 <strong><em>g(·, ·)</em></strong> ， 对于每一组用户与候选新闻的组合 <strong><em>(u, c)</em></strong> ，可以使用函数 <strong><em>g:su, c → y</em></strong> 来预测用户点击该新闻的概率，最后新闻推荐的顺序就是按照这个计算得到的概率大小来对候选新闻进行排序。</p>
+<p>以上就是个人新闻推荐问题的定义。</p>
+<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><p>Microsoft一共使用了 <strong>AUC、MRR、nDCG@5、nDCG@10</strong> 四个指标来对模型预测的结果进行评估。</p>
+<p>推荐系统还有很多指标来衡量性能就不在此赘述。</p>
+<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>AUC是用于衡量一个分类器在分类任务上的表现好坏的评价指标</p>
+<h4 id="ROC-Curve"><a href="#ROC-Curve" class="headerlink" title="ROC Curve"></a>ROC Curve</h4><p>ROC曲线是用来评价分类任务性能好坏的一个指标，ROC曲线主要用来描述以下两个参数：</p>
+<p><strong>TPR</strong> 与 <strong>FPR</strong> （真阳率与假阳率）</p>
+<p>分类任务中的几个类别：（对于二分类问题）</p>
+<p>TP：预测为真且本来样本也为真 </p>
+<p>FP：预测为真但实际分类应该为假</p>
+<p>TN：预测为假且实际分类也为假</p>
+<p>FN：预测为假实际分类为真</p>
+<h5 id="TPR"><a href="#TPR" class="headerlink" title="TPR"></a>TPR</h5><p>真阳率：<strong><em>TP / TP +FN</em></strong> ,即类别为真的样本预测为真的概率。</p>
+<h5 id="FPR"><a href="#FPR" class="headerlink" title="FPR"></a>FPR</h5><p>假阳率： <strong><em>FP / TN  +FP</em></strong> ，即类别为假的样本预测为真的概率</p>
+<p><strong><em>ROC曲线就是用来描述这两个参数的曲线，以TPR为纵轴，以FPR为横轴。</em></strong></p>
+<h4 id="AUC（Area-Under-Curve）"><a href="#AUC（Area-Under-Curve）" class="headerlink" title="AUC（Area Under Curve）"></a>AUC（Area Under Curve）</h4><p>AUC即ROC曲线下的面积大小。</p>
+<p>一般认为AUC最小值为 <strong>0.5</strong> ，意味着对好坏样本预测为真的概率都为0.5， 显然这个分类器没有意义，相较于抛硬币来说。</p>
+<h4 id="ROC曲线的作图方法"><a href="#ROC曲线的作图方法" class="headerlink" title="ROC曲线的作图方法"></a>ROC曲线的作图方法</h4><p>调整分类阈值（也就是说预测概率大于某个值时判定为真，预测概率小于某个值时判定为假）来得到一组 <strong>TPR</strong> 与 <strong>FPR</strong> 的值，以此得到ROC曲线。</p>
+<p>AUC的计算方法就是微积分，做完图自然就得到AUC的值了。</p>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>下面给一张ROC曲线示意图：<br><img src="https://img-blog.csdnimg.cn/20200906191342191.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>AUC示意图：<br><img src="https://img-blog.csdnimg.cn/20200906191418124.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="NDGG-K"><a href="#NDGG-K" class="headerlink" title="NDGG@K"></a>NDGG@K</h3><p>第二个评价指标是<strong>NDCG（Normalized Discounted Cummulative Gain）</strong> ，<strong>K</strong>是一个参数，在下文进行解释。</p>
+<h4 id="CG"><a href="#CG" class="headerlink" title="CG"></a>CG</h4><p>首先是CG（Cummulative Gain）累积效益，在推荐系统中CG即将每个推荐结果相关性(relevance)的分值累加后作为整个推荐列表(list)的得分。即<br><img src="https://img-blog.csdnimg.cn/20200906191443492.png#pic_center" alt="在这里插入图片描述"><br>k表示列表的长度，也就是上文中的k参数。<strong>rel</strong> <em>i</em> 则表示的是第i个推荐结果的相关度。</p>
+<h4 id="DCG"><a href="#DCG" class="headerlink" title="DCG"></a>DCG</h4><p>然后是DCG评价指标，DCG评价将位置因素也考虑了进去，</p>
+<p><img src="https://img-blog.csdnimg.cn/20200906191455922.png#pic_center" alt="在这里插入图片描述"></p>
+<p>推荐结果的位置越后，结果其相关度discounted（打折扣）就越多</p>
+<h4 id="NDCG"><a href="#NDCG" class="headerlink" title="NDCG"></a>NDCG</h4><p>DCG也存在其局限性，即一个用户的评价指标不能跟对另一个用户的评价进行比较。</p>
+<p>所以要对每个用户的评价得分进行归一化。</p>
+<p>计算NDGG需要引入一个概念<strong>IDGG</strong>（即对用户最理性的推荐结果得分），得到下列计算公式</p>
+<p>对于某个用户的推荐结果计算</p>
+<p><img src="https://img-blog.csdnimg.cn/20200906191535667.png#pic_center" alt="在这里插入图片描述"><br><strong>NDCG</strong>（每个用户的NDCG取平均）计算如下：<br><img src="https://img-blog.csdnimg.cn/20200906191549406.png#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="MRR"><a href="#MRR" class="headerlink" title="MRR"></a>MRR</h3><p>MRR的理解相对来说比较简单</p>
+<p>MRR的计算公式如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200906191608352.png#pic_center" alt="在这里插入图片描述"></p>
+<p>其中Q是用户的个数，<strong>rank</strong> <em>i</em>是第i位用户的推荐结果中第一个为真的预测item的position。</p>
+<p>先得到每个用户的<strong>rank</strong> <em>i</em>对其取倒数作为该用户推荐结果的分数,然后取平均得到MRR指标。</p>
+<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><p>根据Microsoft发表的论文，一共有以下三个数据集，都是基于MIND数据集来进行Sample的。</p>
+<p>下面简单介绍一下MIND数据集的格式，txt数据集相较于small数据集来说更为的简单且数据量也很小，small数据集又是large数据集的一个子集，所以只简单地介绍一下large数据集的数据格式。</p>
+<h3 id="数据集格式"><a href="#数据集格式" class="headerlink" title="数据集格式"></a>数据集格式</h3><p>MIND数据集是微软跟踪了微软新闻中的100万个用户与161013篇新闻的交互行为所得到的数据集。</p>
+<p>具体的数据细节可以看下图：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200906191633984.png#pic_center" alt="在这里插入图片描述"></p>
+<p>MIND数据集里记录了1000000个用户的行为历史，包括有161013篇新闻，15777377个Impression（一个Impression是在某条记录中展现给用户看的新闻界面，包含有该页中的新闻以及对应的标签，表示用户是否有点击过该新闻）以及24155470条Click behavior（每个用户点击过的新闻历史）。</p>
+<p>Microsoft提供的MIND数据集里包括有以下几个文件：</p>
+<p><strong>behaviors.tsv</strong> 、<strong>news.tsv</strong> 、 <strong>uid2index.pkl</strong>  、<strong>entity_embedding.pkl</strong></p>
+<h4 id="behaviors-tsv"><a href="#behaviors-tsv" class="headerlink" title="behaviors.tsv"></a>behaviors.tsv</h4><p>首先是behaviors.tsv中的数据，该文件中的每一行数据都是用于模型训练的一个 <strong>train_data</strong> , </p>
+<p>behavirs.tsv中的一行数据以如下格式给出：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200906191646290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>每一行数据依次包括有：Impression_id（该条记录的id）、用户id、时间点、用户的点击历史、以及一个impression。</p>
+<p>behaviors中的每条数据中的新闻都以新闻id的形式给出，impression中的每条新闻都对应一个标签 <em>y</em> ， 1代表用户点击该新闻，0表示用户没有点击该新闻</p>
+<h4 id="news-tsv"><a href="#news-tsv" class="headerlink" title="news.tsv"></a>news.tsv</h4><p>news.tsv中包括有每条新闻的细节信息用于表征新闻。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200906191725958.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>新闻中的每条数据依次包括：新闻id、新闻的类别、子类别、标题、摘要、URL以及新闻中的实体信息</p>
+<h4 id="uid2index-pkl"><a href="#uid2index-pkl" class="headerlink" title="uid2index.pkl"></a>uid2index.pkl</h4><p>该文件存储了记录了用户id以及用户编码的字典，用于训练用户的embedding矩阵</p>
+<h4 id="relation-embedding-pkl"><a href="#relation-embedding-pkl" class="headerlink" title="relation_embedding.pkl"></a>relation_embedding.pkl</h4><p>该文件存储了实体关系的Embedding矩阵</p>
+<h4 id="数据集的划分"><a href="#数据集的划分" class="headerlink" title="数据集的划分"></a>数据集的划分</h4><p>MIND数据一共收集了用户6个星期的行为</p>
+<p>将前五个星期作为训练集，将第五个星期的最后一天作为验证集，将最后一星期的用户行为作为测试集</p>
+<h3 id="txt数据集"><a href="#txt数据集" class="headerlink" title="txt数据集"></a>txt数据集</h3><p>txt数据集是Microsoft用于展示论文中的实验结果提供的数据集，比small数据集还小上非常多，之所以称其为txt数据集是因为Microsoft是以txt文件格式来展示这份数据集，想要看一下这个作为示例的小数据集读者可以去Github上查看一下微软提供的原始数据</p>
+<h3 id="small数据集"><a href="#small数据集" class="headerlink" title="small数据集"></a>small数据集</h3><p>small数据集是从large数据集中抽取出来的，所以数据量比较小，具体的细节如下：</p>
+<p><strong>user_num</strong> : 50000</p>
+<p><strong>behaviors</strong> :  156965+73152</p>
+<p><strong>news</strong> : 51282+42416</p>
+<h3 id="large数据集"><a href="#large数据集" class="headerlink" title="large数据集"></a>large数据集</h3><p>large数据集具体的细节如下：</p>
+<p><strong>user_num</strong> : 750434</p>
+<p><strong>behaviors</strong> :   2232748 + 376471</p>
+<p><strong>news</strong> :    101527+72023</p>
+<h2 id="已有的模型"><a href="#已有的模型" class="headerlink" title="已有的模型"></a>已有的模型</h2><h3 id="已有模型的简要概括"><a href="#已有模型的简要概括" class="headerlink" title="已有模型的简要概括"></a>已有模型的简要概括</h3><p>Microsoft当前提出的模型有NPA、NRMS、NAML等，这三个模型在大体结构上都保持了一致性。<br>NPA、NRMS以及NAML从整体构造上来看分为三个部分：<strong>News Encoder</strong> 、 <strong>User Encoder</strong> 、 <strong>Click Predictor</strong> 。<br>三个module的作用分为为：<br><strong>News Encoder</strong> ： 这个模型是用于从News的信息中来学习News的表征<br><strong>User Encoder</strong> : 这个模型是用于从用户的历史点击状态中来学习用户的表征<br><strong>Click Predictor</strong> ： 这个模型是用于计算由前两个模型计算得到的News Representation 以及 User Representation的匹配得分以此来为用户进行个人新闻推荐服务</p>
+<h3 id="模型训练方式"><a href="#模型训练方式" class="headerlink" title="模型训练方式"></a>模型训练方式</h3><p>  已有的模型的训练方式都完全一样，在产生训练集的时候给每个正样本加上K个负样本进行一起训练以此来得到更好的训练效果。论文里面提到当K取4时模型训练之后的泛化能力最好。</p>
+<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4><p> 对于Click Predictor计算得到的score，使用Softmax层进行一次Normalization，然后得到正样本的预测概率大小 <strong>Pi</strong> 用于计算损失函数。</p>
+<h4 id="损失函数的定义"><a href="#损失函数的定义" class="headerlink" title="损失函数的定义"></a>损失函数的定义</h4><p><img src="https://img-blog.csdnimg.cn/2020090816141242.png#pic_center" alt="在这里插入图片描述"><br>计算得到损失函数之后就可以进行梯度的反向传播来训练搭建的模型了。</p>
+<h3 id="NPA"><a href="#NPA" class="headerlink" title="NPA"></a>NPA</h3><p>NPA的特点即Personal Attention，NPA论文提出的idea就是每个用户对每条新闻的关注点不同（如下图）<img src="https://img-blog.csdnimg.cn/20200908161943249.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>对于两个用户来说当他们看到同一条新闻时，User-1与User-2所关注的地方是不一样的，这个地方就是NPA模型的创新点，也就是所谓的idea。<br>NPA模型是在计算 <strong>User Encoder</strong> 与 <strong>News Encoder</strong> 时加入了Attention机制，将 <em>userid</em> 也进行encode作为Attention机制中的query向量来对News Encoder以及User Encoder进行更近一步的表征。</p>
+<h4 id="News-Encoder"><a href="#News-Encoder" class="headerlink" title="News Encoder"></a>News Encoder</h4><p>NPA中的NewsEncoder一共有三层（NPA中只取了news title作为新闻特征）<br>首先是 <strong>Embedding Layer</strong> ，将news title转换为矩阵<br>然后是 <strong>CNN</strong> ，将上一层得到的矩阵用CNN再进行特征的提取<br>最后一层就是 <strong>Attention Layer</strong> ：查询向量是Userid进行Encode得到的，然后做一次Attention将新闻的表征矩阵转换为一个表征向量，到这新闻的表征计算就结束了。</p>
+<h4 id="User-Encoder"><a href="#User-Encoder" class="headerlink" title="User Encoder"></a>User Encoder</h4><p>User Encoder是用用户历史点击过的新闻来计算用户的表征，这一个Encoder是搭建在News Encoder之上的，在NewsEncoder的基础上再加上一层AttentionLayer，使用用户Userid作为QueryVector再次进行Attention从用户点击过的历史新闻表征来得到User Representation。</p>
+<h4 id="Click-Predictor"><a href="#Click-Predictor" class="headerlink" title="Click Predictor"></a>Click Predictor</h4><p>这一层就非常的简单，就是将NewsEncoder与UserEncoder计算得到的两个vector做一次内积得到分数，然后做Softmax回归。</p>
+<h4 id="NPA的Architecture"><a href="#NPA的Architecture" class="headerlink" title="NPA的Architecture"></a>NPA的Architecture</h4><p><img src="https://img-blog.csdnimg.cn/20200908163821385.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="NAML"><a href="#NAML" class="headerlink" title="NAML"></a>NAML</h3><p>NAML的idea就是新闻的信息不止有news title，如果加上body、category等等，模型的训练效果会更好</p>
+<h4 id="News-Encoder-1"><a href="#News-Encoder-1" class="headerlink" title="News Encoder"></a>News Encoder</h4><p>NAML的News Encoder一共有四个components，</p>
+<h5 id="title-encoder"><a href="#title-encoder" class="headerlink" title="title encoder"></a>title encoder</h5><p>第一个是title encoder，一共有三层<br>第一层是<strong>Embedding</strong> ， 将title转换为词矩阵<br>第二层是<strong>CNN</strong>， 进一步提取特征<br>第三层是一个Word-Level的<strong>Attention</strong> ，训练出一个查询向量，求出News Representation</p>
+<h5 id="body-encoder"><a href="#body-encoder" class="headerlink" title="body encoder"></a>body encoder</h5><p>这一层与title encoder相似，但是参数不共享，所以就不多讲了</p>
+<h5 id="category-encoder"><a href="#category-encoder" class="headerlink" title="category encoder"></a>category encoder</h5><p>category就两层：<strong>Embedding</strong> 和 <strong>Linear NetWork</strong></p>
+<h5 id="Attention-Pooling"><a href="#Attention-Pooling" class="headerlink" title="Attention Pooling"></a>Attention Pooling</h5><p>将前三个components得到的vector进行一次Attention得到News Representation</p>
+<h4 id="User-Encoder-1"><a href="#User-Encoder-1" class="headerlink" title="User Encoder"></a>User Encoder</h4><p>User Encoder在News Encoder的基础上又加了一层Attention然后计算得到User Representation<br>这个跟Google之前提出的论文提问非常契合：<br><strong>Attention is all you need！</strong></p>
+<h4 id="Click-Predictor-1"><a href="#Click-Predictor-1" class="headerlink" title="Click Predictor"></a>Click Predictor</h4><p>同NPA一样的结构，就不在此赘述了<br><img src="https://img-blog.csdnimg.cn/20200908171158365.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="NRMS"><a href="#NRMS" class="headerlink" title="NRMS"></a>NRMS</h3><p>NRMS的idea来自于Self-Attention（来源于Transformer），Transformer还没有总结过，就不在此细讲。</p>
+<h4 id="News-Encoder-2"><a href="#News-Encoder-2" class="headerlink" title="News Encoder"></a>News Encoder</h4><p>不同于NPA，NRMS的NewsEncoder只有两层：<strong>Embedding</strong> 和 <strong>Self-Attention</strong><br>将新闻的newstitle转换为词矩阵后直接使用Self-Attention进行计算得到news Representation</p>
+<h4 id="User-Encoder-2"><a href="#User-Encoder-2" class="headerlink" title="User Encoder"></a>User Encoder</h4><p>User Encoder在NewsEncoder的基础上又加了一层self-Attention，得到用户的表征</p>
+<h4 id="Click-Predictor-2"><a href="#Click-Predictor-2" class="headerlink" title="Click Predictor"></a>Click Predictor</h4><p>与前两个模型一样不在此赘述<br><img src="https://img-blog.csdnimg.cn/20200908164618365.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Notes/" rel="tag"># Notes</a>
+          
+            <a href="/tags/Recommendation/" rel="tag"># Recommendation</a>
+          
+            <a href="/tags/Machine-Learing/" rel="tag"># Machine Learing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/04/8.4/" rel="next" title="PyTorch实战框架搭建">
+                <i class="fa fa-chevron-left"></i> PyTorch实战框架搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JS.H</p>
+              <p class="site-description motion-element" itemprop="description">Python,ML</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题定义"><span class="nav-number">2.</span> <span class="nav-text">问题定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">2.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-Definition"><span class="nav-number">2.2.</span> <span class="nav-text">Problem Definition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评价指标"><span class="nav-number">3.</span> <span class="nav-text">评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AUC"><span class="nav-number">3.1.</span> <span class="nav-text">AUC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ROC-Curve"><span class="nav-number">3.1.1.</span> <span class="nav-text">ROC Curve</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TPR"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">TPR</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FPR"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">FPR</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AUC（Area-Under-Curve）"><span class="nav-number">3.1.2.</span> <span class="nav-text">AUC（Area Under Curve）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ROC曲线的作图方法"><span class="nav-number">3.1.3.</span> <span class="nav-text">ROC曲线的作图方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Example"><span class="nav-number">3.1.4.</span> <span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NDGG-K"><span class="nav-number">3.2.</span> <span class="nav-text">NDGG@K</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CG"><span class="nav-number">3.2.1.</span> <span class="nav-text">CG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DCG"><span class="nav-number">3.2.2.</span> <span class="nav-text">DCG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NDCG"><span class="nav-number">3.2.3.</span> <span class="nav-text">NDCG</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MRR"><span class="nav-number">3.3.</span> <span class="nav-text">MRR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集"><span class="nav-number">4.</span> <span class="nav-text">数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集格式"><span class="nav-number">4.1.</span> <span class="nav-text">数据集格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#behaviors-tsv"><span class="nav-number">4.1.1.</span> <span class="nav-text">behaviors.tsv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#news-tsv"><span class="nav-number">4.1.2.</span> <span class="nav-text">news.tsv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#uid2index-pkl"><span class="nav-number">4.1.3.</span> <span class="nav-text">uid2index.pkl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#relation-embedding-pkl"><span class="nav-number">4.1.4.</span> <span class="nav-text">relation_embedding.pkl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据集的划分"><span class="nav-number">4.1.5.</span> <span class="nav-text">数据集的划分</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#txt数据集"><span class="nav-number">4.2.</span> <span class="nav-text">txt数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#small数据集"><span class="nav-number">4.3.</span> <span class="nav-text">small数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#large数据集"><span class="nav-number">4.4.</span> <span class="nav-text">large数据集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已有的模型"><span class="nav-number">5.</span> <span class="nav-text">已有的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#已有模型的简要概括"><span class="nav-number">5.1.</span> <span class="nav-text">已有模型的简要概括</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型训练方式"><span class="nav-number">5.2.</span> <span class="nav-text">模型训练方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Softmax"><span class="nav-number">5.2.1.</span> <span class="nav-text">Softmax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#损失函数的定义"><span class="nav-number">5.2.2.</span> <span class="nav-text">损失函数的定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NPA"><span class="nav-number">5.3.</span> <span class="nav-text">NPA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#News-Encoder"><span class="nav-number">5.3.1.</span> <span class="nav-text">News Encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#User-Encoder"><span class="nav-number">5.3.2.</span> <span class="nav-text">User Encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Click-Predictor"><span class="nav-number">5.3.3.</span> <span class="nav-text">Click Predictor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NPA的Architecture"><span class="nav-number">5.3.4.</span> <span class="nav-text">NPA的Architecture</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAML"><span class="nav-number">5.4.</span> <span class="nav-text">NAML</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#News-Encoder-1"><span class="nav-number">5.4.1.</span> <span class="nav-text">News Encoder</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#title-encoder"><span class="nav-number">5.4.1.1.</span> <span class="nav-text">title encoder</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#body-encoder"><span class="nav-number">5.4.1.2.</span> <span class="nav-text">body encoder</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#category-encoder"><span class="nav-number">5.4.1.3.</span> <span class="nav-text">category encoder</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Attention-Pooling"><span class="nav-number">5.4.1.4.</span> <span class="nav-text">Attention Pooling</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#User-Encoder-1"><span class="nav-number">5.4.2.</span> <span class="nav-text">User Encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Click-Predictor-1"><span class="nav-number">5.4.3.</span> <span class="nav-text">Click Predictor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NRMS"><span class="nav-number">5.5.</span> <span class="nav-text">NRMS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#News-Encoder-2"><span class="nav-number">5.5.1.</span> <span class="nav-text">News Encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#User-Encoder-2"><span class="nav-number">5.5.2.</span> <span class="nav-text">User Encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Click-Predictor-2"><span class="nav-number">5.5.3.</span> <span class="nav-text">Click Predictor</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JS.H</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CS</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">
+  TJU 
+  </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
