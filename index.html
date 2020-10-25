@@ -332,37 +332,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>本篇论文是针对个人新闻推荐系统再提出了一个新的模型——<strong>FIM</strong>（同样基于神经网络）</p>
-<ul>
-<li><p><strong>核心问题：</strong> <em>用户的兴趣</em>与<em>候选新闻</em>二者的精确匹配</p>
-</li>
-<li><p><strong>现有模型存在的问题：</strong> 现存的模型都会选择将用户的兴趣表征为一个单独的向量，这样会使用户的很多兴趣表征缺失</p>
-</li>
-<li><p><strong>FIM模型的基本构造思路：</strong> 不同于之前的模型将用户的兴趣表征为一个联合的向量，FIM模型使用多级别的用户兴趣表征方式使用卷积神经网络来提取用户的多方面的兴趣。</p>
-<h1 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h1><h3 id="问题的建模"><a href="#问题的建模" class="headerlink" title="问题的建模"></a>问题的建模</h3><p>个人新闻推荐问题可以表述如下，给定用户 <strong><em>u</em></strong>，以及用户 <strong><em>u</em></strong> 的点击新闻历史 <strong><em>Su</em></strong>，然后给定候选新闻 <strong><em>Ci</em></strong>，候选新闻还带有标签 <strong><em>Yi</em></strong>，根据以上给出的数据来求一个模型 <strong><em>g</em></strong>，来通过给出一个用户 <strong><em>u</em></strong> 以及其历史点击新闻 <strong><em>Su</em></strong> 来预测用户是否会点击候选新闻。</p>
-<h3 id="Model-View"><a href="#Model-View" class="headerlink" title="Model View"></a>Model View</h3><p>FIM模型分为三部分，News Representation Model、Cross Interaction Model以及Click Predictor Model，分别为用于新闻表示的模型，交叉乘积的模型以及预测评分的模型<br><img src="https://img-blog.csdnimg.cn/20200806121626852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-</li>
-<li><p>News Representation Model<br>这一部分的模型是用来学习得到News的表征。<br>首先，根据作者的阐述，一个用户点击News应该根据的是News的Title以及Category，所以将News的Title与Category做连接作为输入向量。<br><strong><em>Input：</em></strong> 模型的输入为<br><img src="https://img-blog.csdnimg.cn/20200806121725933.png" alt="在这里插入图片描述"><br><strong><em>Word Embedding：</em></strong> 先对News的输入向量做词向量的转换进一步得到News的表征矩阵<br><img src="https://img-blog.csdnimg.cn/20200806122122391.png" alt="在这里插入图片描述"><br><strong><em>CNN：</em></strong> 使用dilation convolution来构造HDC（Hierarchical Dilated Convolution）编码器来进一步学习News的特征表示<br><img src="https://img-blog.csdnimg.cn/20200806122405406.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>计算公式如下：<img src="https://img-blog.csdnimg.cn/20200806122436581.png" alt="在这里插入图片描述"><br>经过以上两步，一篇News就转换为 <strong><em>L</em></strong> 个表征向量,<strong><em>L</em></strong> 指的是使用了几层的空洞卷积，现在News的表征矩阵可以表示为<br><img src="https://img-blog.csdnimg.cn/20200806122703937.png" alt="在这里插入图片描述"></p>
-</li>
-<li><p>Cross Interaction Model<br>在这个模型中，将上述得到各个News的表征矩阵与候选新闻的表征矩阵进行相乘<br><img src="https://img-blog.csdnimg.cn/202008061230395.png" alt="在这里插入图片描述"><br>计算公式如上<br>k,c表示第k个历史点击新闻以及候选新闻c<br>为了很好地表示用户的兴趣信息，在这一步将所有交叉乘积得到的表征矩阵汇总到一个三维的矩阵中<br><img src="https://img-blog.csdnimg.cn/20200806123318583.png" alt="在这里插入图片描述"><br>n即为历史点击新闻的总数<br>然后使用一个三维的卷积神经网络得到用户与候选新闻的匹配向量</p>
-</li>
-<li><p>Click Predictor<br>这一层只有一个线性层来最后获得用户与候选新闻的匹配分数<br><img src="https://img-blog.csdnimg.cn/20200806123542256.png" alt="在这里插入图片描述"></p>
-<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>与之前几篇论文一样取了负样本进行一起训练，损失函数如下：<br><img src="https://img-blog.csdnimg.cn/20200806123644326.png" alt="在这里插入图片描述"></p>
-</li>
-</ul>
-<h1 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h1><h5 id="实验参数的配置："><a href="#实验参数的配置：" class="headerlink" title="实验参数的配置："></a>实验参数的配置：</h5><ul>
-<li>词向量维度：300</li>
-<li>News的表征单词数目：20</li>
-<li>卷积神经网络中窗口大小以及数目：3 150</li>
-<li>HDC编码层：[1, 2, 3]</li>
-<li>3D卷积神经网络的过滤器：<br>第一层：32-[3,3,3]<br>第二层：16-[3,3,3]<br>步幅：[1,1,1]<br>池化层大小以及步幅：[3,3,3]   [3,3,3]<br>负样本数：4<br>批大小：100<br>学习率：1e-3</li>
-</ul>
-<h5 id="实验结果如下"><a href="#实验结果如下" class="headerlink" title="实验结果如下"></a>实验结果如下</h5><p><img src="https://img-blog.csdnimg.cn/20200806124645149.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><p>因为是刚刚入门推荐系统，也只是粗略的阅读了几篇论文，所以理解的并不深刻，后续如果有更深的理解会再进行补充</p>
-
-          
+          <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>本篇论文是针对个人新闻推荐系统再提出了一个新的模型——<strong>FIM</strong>（同样基于神经网络）</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/10/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
