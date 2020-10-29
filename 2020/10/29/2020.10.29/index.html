@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Vim,Ubuntu," />
+  <meta name="keywords" content="News Recommendation,Deep Learning,Knowledge Graph," />
 
 
 
@@ -79,18 +79,23 @@
 
 
 
-<meta name="description" content="Ubuntu下的Vim使用">
+<meta name="description" content="Abstract概述引用论文中的一句话，新闻推荐系统的目标是处理大量的新闻以及给用户提供个性化的新闻推荐。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vim的使用">
-<meta property="og:url" content="https://hq0515.github.io/2020/04/12/Vim%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="论文笔记——News Recommendation with Topic-Enriched Knowledge Graphs">
+<meta property="og:url" content="https://hq0515.github.io/2020/10/29/2020.10.29/index.html">
 <meta property="og:site_name" content="JS.HUANG">
-<meta property="og:description" content="Ubuntu下的Vim使用">
-<meta property="article:published_time" content="2020-04-12T08:22:26.846Z">
-<meta property="article:modified_time" content="2020-04-15T04:09:43.227Z">
+<meta property="og:description" content="Abstract概述引用论文中的一句话，新闻推荐系统的目标是处理大量的新闻以及给用户提供个性化的新闻推荐。">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201028172903670.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201028230109916.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201028231115448.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2020-10-29T03:05:13.455Z">
+<meta property="article:modified_time" content="2020-10-29T03:06:58.651Z">
 <meta property="article:author" content="JS.H">
-<meta property="article:tag" content="Vim">
-<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="News Recommendation">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Knowledge Graph">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201028172903670.png#pic_center">
 
 
 
@@ -120,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://hq0515.github.io/2020/04/12/Vim的简单使用/"/>
+  <link rel="canonical" href="https://hq0515.github.io/2020/10/29/2020.10.29/"/>
 
 
 
 
 
-  <title>Vim的使用 | JS.HUANG</title>
+  <title>论文笔记——News Recommendation with Topic-Enriched Knowledge Graphs | JS.HUANG</title>
   
 
 
@@ -243,7 +248,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hq0515.github.io/2020/04/12/Vim%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="https://hq0515.github.io/2020/10/29/2020.10.29/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JS.H">
@@ -260,7 +265,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vim的使用</h1>
+          <h1 class="post-title" itemprop="name headline">论文笔记——News Recommendation with Topic-Enriched Knowledge Graphs</h1>
         
 
         <div class="post-meta">
@@ -272,8 +277,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T16:22:26+08:00">
-                2020-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-29T11:05:13+08:00">
+                2020-10-29
               </time>
             
 
@@ -295,8 +300,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/News-Recommendation/" itemprop="url" rel="index">
+                    <span itemprop="name">News Recommendation</span>
                   </a>
                 </span>
 
@@ -332,29 +337,15 @@
       
 
       
-        <p>Ubuntu下的Vim使用</p>
+        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>概述</strong><br>引用论文中的一句话，新闻推荐系统的目标是处理大量的新闻以及给用户提供个性化的新闻推荐。</p>
 <a id="more"></a>
-<p>因为开始从Windows转Ubuntu，所以开始学习Vim编辑器的使用。<br>记录一下Vim的使用方法，以便后期使用：<br>打开Vim</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#vim命令新建一个文件</span></span><br><span class="line">vim [文件名]</span><br></pre></td></tr></table></figure>
-<p>输入命令后就进入Vim界面了，vim 共分为三种模式，分别是命令模式，输入模式和底线命令模式。<br>刚进入Vim进入的命令模式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">i  <span class="comment">#——进入输入模式</span></span><br><span class="line">x  <span class="comment">#——删除光标所在位置的字符</span></span><br><span class="line">：  <span class="comment">#——底线命令模式</span></span><br></pre></td></tr></table></figure>
-<p>输入i就进入输入模式，可以开始敲入字符了<br>在命令模式下按下i就进入了输入模式。<br>在输入模式中，可以使用以下按键：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">字符按键以及Shift组合  <span class="comment">#输入字符</span></span><br><span class="line">ENTER  <span class="comment">#回车键，换行</span></span><br><span class="line">BACK SPACE  <span class="comment">#退格键，删除光标前一个字符</span></span><br><span class="line">DEL  <span class="comment">#删除键，删除光标后一个字符</span></span><br><span class="line">方向键  <span class="comment">#在文本中移动光标</span></span><br><span class="line">HOME/END  <span class="comment">#移动光标到行首/行尾</span></span><br><span class="line">Page Up/Page Down  <span class="comment">#上/下翻页</span></span><br><span class="line">Insert  <span class="comment">#切换光标为输入/替换模式，光标将变成竖线/下划线</span></span><br><span class="line">ESC  <span class="comment">#退出输入模式，切换到命令模式</span></span><br></pre></td></tr></table></figure>
-<p>  两天前开始熟悉Vim编辑器的操作，觉得Vim真的是一个非常好用的编辑器，特别强悍。<br>  Vim这么多年没有被淘汰感觉也正是因为这些高级特性。<br>  之前是简单的介绍了一些简易命令，也是刚开始使用Vim时候的使用过程。<br>  记录一下自己敲代码过程中由于需要而去学习的指令。<br>  下面是vim新建一个helloword.cpp的过程</p>
-<ul>
-<li><p>vim新建helloword.cpp(vim新建helloword.cpp的时候不会在当前目录下生成一个新文件，这点不同于touch命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$vim</span> helloworld.cpp</span><br></pre></td></tr></table></figure></li>
-<li><p>设置行号<br>进来之后就是vim编辑器的熟悉界面了，vim进来之后是没有行号的。<br>但是编译调试的过程是需要行号的，相信这点很多人都深有体会。<br>在命令模式下设置行号</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$:<span class="built_in">set</span> number</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑的时候移动光标<br>Vim是没有鼠标的，当然想用鼠标也可以设置。这里就不再赘述了，毕竟用处不多。</p>
-</li>
-</ul>
-<p><strong>hjkl</strong>四个键分别是左上下右四个方向的移动。<br>移动至行末 <code>$</code>就是一个$符号</p>
-<ul>
-<li>查找替换文本<br>就是Windows下的Ctrl+F<br>Vim下就是<figure class="highlight vbscript-html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">$/<span class="tag">&lt;<span class="name">需要查找的东西</span>&gt;</span></span></span><br><span class="line"><span class="xml">$:%s/a/b 将当前所有行出现的a替换为b</span></span><br></pre></td></tr></table></figure>
-就先记到这吧，在此感谢qt老师的OS课教学，虽然我没怎么听，但是还是学会了一点Linux的基本东西。</li>
-</ul>
+<p><img src="https://img-blog.csdnimg.cn/20201028172903670.png#pic_center" alt="在这里插入图片描述"><br><strong>动机</strong><br>新闻的标题中蕴含着丰富的实体信息以及话题信息，但是现有的模型通常忽略了实体信息与话题信息之间的关联，所以本篇paper提出了一个新的模型<strong>TEKGR</strong>（引入了知识图谱）</p>
+<p><strong>模型简介</strong></p>
+<p><strong>TEKGR</strong>从两个方面处理Title：<br>（1）只从Title的单词中提取新闻的语义信息<br>（2）通过知识图谱（考虑话题、实体以及文本信息的关联）来对新闻的语义信息进行又一次提取<br>实验证明该模型优于现有的模型：baseline+NPA</p>
+<h1 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h1><h2 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h2><p>首先是问题定义，不同于Wu的几篇论文，由于该篇论文引入了KnowledgeGraph的概念，所以问题的形式化描述与之前的问题描述有些许不同，但是不同仅仅在于输入的信息更多了，主体来看问题其实一直都是<strong>如何对user以及news进行精确建模才能使user与news进行精确的匹配？</strong><br>NewsRecommendation的形式化定义可以参考这篇博客<a href="https://blog.csdn.net/qq_43753721/article/details/108405880" target="_blank" rel="noopener">NewsRecommendation</a><br>在引入KR后问题的形式化描述如下：<br>对于一个NR系统，<br><strong>Input：</strong> <em>CandidateNews</em> 与 <em>ClickNews<em>（通过用户点击过的新闻来对用户建模）<br>*</em>Output：** 输出一个 *Probability</em><br>主要记录一下知识图谱 <em>G</em> 形式化的表示，<em>G</em> 中包含的元素为三元组（h, r, t）分别为head，relation， tail表示两个实体的关系。</p>
+<h2 id="模型探究（TEKGR）"><a href="#模型探究（TEKGR）" class="headerlink" title="模型探究（TEKGR）"></a>模型探究（TEKGR）</h2><p>同所有的介绍一下，首先贴张模型的整体框架图，TEKGR总共包括三个Layer：<br>（1）KG-Based News Modeling Layer（2）Attention Layer<br> (3)  Scoring Layer<br>  第一层是NewsEncoder（通过word，topic，KG）（引入GNN）来对一篇新闻进行建模<br>  第二层是Attention Layer（在新闻建好模型的基础上）通过Attention机制对user进行建模（套路感觉没有变过）<br>  第三层是Scot层计算分数（这一层套路感觉也没变过）<br><img src="https://img-blog.csdnimg.cn/20201028230109916.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>AttentionLayer和ScotLayer就不在此多说，可以参考之前NewsRecommendation那篇博客的总结。</p>
+<p>所以需要重点分析的就是KG-Based News Modeling Layer这一层<br><strong>KG-Based News Modeling Layer</strong><br> <img src="https://img-blog.csdnimg.cn/20201028231115448.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzUzNzIx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br> 该层的总体架构如上图所示，总体来看这一层分为三个Encoder<br> （1）Word-level News Encoder<br> 该层单纯地使用新闻的文本信息来对News进行建模<br> 总的来看很简单，老套路<br> 输入一串单词序列，经过Embedding层变成词矩阵，再经过Bi-GRU来对句子建模，使用Attention进行pooling操作将News转换为单个向量。<br> （2）KnowledgeEncoder<br> 这一层同样使用了三个部分来学习news的topic信息，<br> 首先是概念抽取（怎么抽取论文中没有细讲），接着是Embedding，最后是一个Attention<br> （3）KG-Level News Encoder<br> 这一层先对实体进行连接，构建子图通过GNN来得到包含图谱级别信息的vector最后做一个utilize操作<br>经过以上三层就得到一个news的vector<br>然后就是Attention和Scot层<br>得到最后的分数然后计算得到概率</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>目前笔者能够理解的就这么多，论文中还有许多概念是笔者没弄明白的，如果之后有更深的理解会来更新该篇笔记</p>
 
       
     </div>
@@ -372,9 +363,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Vim/" rel="tag"># Vim</a>
+            <a href="/tags/News-Recommendation/" rel="tag"># News Recommendation</a>
           
-            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/Knowledge-Graph/" rel="tag"># Knowledge Graph</a>
           
         </div>
       
@@ -387,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/12/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" rel="next" title="第一篇博客">
-                <i class="fa fa-chevron-left"></i> 第一篇博客
+              <a href="/2020/10/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="next" title="论文笔记——FIM">
+                <i class="fa fa-chevron-left"></i> 论文笔记——FIM
               </a>
             
           </div>
@@ -396,10 +389,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/12/Pandas%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" rel="prev" title="Pandas做数据匹配">
-                Pandas做数据匹配 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -451,8 +440,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -512,6 +510,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model"><span class="nav-number"></span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题定义"><span class="nav-number">1.</span> <span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型探究（TEKGR）"><span class="nav-number">2.</span> <span class="nav-text">模型探究（TEKGR）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
